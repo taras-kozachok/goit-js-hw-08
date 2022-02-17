@@ -1,10 +1,10 @@
-var throttle = require('lodash.throttle');
-
+import throttle from 'lodash.throttle';
+const TIME_KEY = "videoplayer-current-time";
 const iframe = document.querySelector('iframe');
 
 const player = new Vimeo.Player(iframe);
 
-player.setCurrentTime(localStorage.getItem("videoplayer-current-time")).then(function (seconds) {
+player.setCurrentTime(localStorage.getItem(TIME_KEY)).then(function (seconds) {
     // seconds = the actual time that the player seeked to
 }).catch(function(error) {
     switch (error.name) {
@@ -17,8 +17,8 @@ player.setCurrentTime(localStorage.getItem("videoplayer-current-time")).then(fun
             break;
     }
 });
-player.on('timeupdate', throttle(data => { localStorage.setItem("videoplayer-current-time", (data.seconds)); }, 1000 ));
+player.on('timeupdate', throttle(data => { localStorage.setItem(TIME_KEY, (data.seconds)); }, 1000 ));
 
-console.log(localStorage.getItem("videoplayer-current-time"));
+console.log(localStorage.getItem(TIME_KEY));
 
 
