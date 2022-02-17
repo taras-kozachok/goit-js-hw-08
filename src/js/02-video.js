@@ -1,4 +1,4 @@
-//var throttle = require('lodash.throttle');
+var throttle = require('lodash.throttle');
 
 const iframe = document.querySelector('iframe');
 
@@ -17,16 +17,7 @@ player.setCurrentTime(localStorage.getItem("videoplayer-current-time")).then(fun
             break;
     }
 });
-
-player.on('timeupdate', function (data) { 
-    let i = 1;
-   // console.log(data.seconds);
-    _.throttle(console.log(i));
-   // console.log(i);
-    i += 1;
-    (localStorage.setItem("videoplayer-current-time", (data.seconds)));
- //   const videoplayer-current-time = data
-})
+player.on('timeupdate', throttle(data => { localStorage.setItem("videoplayer-current-time", (data.seconds)); }, 1000 ));
 
 console.log(localStorage.getItem("videoplayer-current-time"));
 
